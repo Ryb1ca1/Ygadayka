@@ -1,0 +1,77 @@
+.game-card {
+    height: 85vh;
+    font-family: 'Open Sans', monospace;
+    background-color: #bee49c7a; /* белый цвет фона карты */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* тень для карточки */
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #2f84da; /* светло-серый фон */
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.card-header {
+    background-color: #099280; /* синий цвет для заголовка карточки */
+    color: #000000; /* белый цвет текста */
+    font-weight: bold;
+    border-radius: 20px 20px 0 0; /* закругленные углы для верхней части */
+    padding: 20px;
+}
+
+.card-body {
+    padding: 30px;
+    color: rgb(153, 0, 255);
+    background-color: #c2d418;
+}
+
+.btn-group {
+    margin-top: 20px;
+}
+
+.btn-info, .btn-success, .btn-link {
+    font-weight: bold; /* усиливаем текст для всех кнопок */
+}
+
+.btn-info, .btn-success {
+    width: 100px;
+}
+
+.btn-info {
+    background-color: #17a2b8; /* голубой цвет для кнопок "меньше" и "больше" */
+    border-color: #17a2b8;
+    color: #fff; /* белый цвет текста */
+}
+
+.btn-info:hover {
+    background-color: #138496; /* изменяем цвет при наведении */
+    border-color: #138496;
+}
+
+.btn-success {
+    background-color: #28a745; /* зеленый цвет для кнопки "Верно!" */
+    border-color: #28a745;
+    color: #fff; /* белый цвет текста */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* изменяем цвет при наведении */
+    border-color: #218838;
+}
+
+.btn-link {
+    color: #d6051a; /* красный цвет для кнопки "Заново" */
+    width: 300px;
+    text-decoration: underline; /* добавляем подчеркивание для ссылочного стиля */
+    transition: color 0.3s; /* добавляем плавное изменение цвета при наведении */
+}
+
+.btn-link:hover {
+    color: #c82333; /* изменяем цвет при наведении */
+    text-decoration: none; /* убираем подчеркивание при наведении */
+}
+
