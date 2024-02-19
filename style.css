@@ -1,25 +1,23 @@
-.game-card {
-    height: 85vh;
+.col-md-4{
+    height: 57vh;
     font-family: 'Open Sans', monospace;
     background-color: #bee49c7a; /* белый цвет фона карты */
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* тень для карточки */
+    display: flexbox;
 }
 
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #2f84da; /* светло-серый фон */
-}
-
-.container {
-    margin-top: 50px;
+    margin-top: 150px;
 }
 
 .card-header {
     background-color: #099280; /* синий цвет для заголовка карточки */
     color: #000000; /* белый цвет текста */
     font-weight: bold;
-    border-radius: 20px 20px 0 0; /* закругленные углы для верхней части */
+    border-radius: 30px 30px 0 0; /* закругленные углы для верхней части */
     padding: 20px;
 }
 
@@ -27,6 +25,10 @@ body {
     padding: 30px;
     color: rgb(153, 0, 255);
     background-color: #c2d418;
+}
+
+.card-footer {
+    display: flexbox;
 }
 
 .btn-group {

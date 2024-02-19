@@ -2,13 +2,16 @@
 function numberToWords(number) {
     const units = ['', 'один', 'два', 'три', 'четыре', 'пять', 'шесть', 'семь', 'восемь', 'девять'];
     const teens = ['', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать'];
-    const tens = ['', 'десять', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто','сто'];
+    const tens = ['', 'десять', 'двадцать', 'тридцать', 'сорок', 'пятьдесят', 'шестьдесят', 'семьдесят', 'восемьдесят', 'девяносто'];
+    const sotki = ['', 'сто', 'двести', 'триста', 'четыреста', 'пятьсот', 'шестьсот', 'семьсот', 'восемьсот', 'девятьсот'];
 
     const numToWords = (num) => {
-        if (num === 0) return 'ноля';
+        if (num === 0) return 'ноль';
         if (num < 10) return units[num];
         if (num < 20) return teens[num - 10];
-        return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + units[num % 10] : '');
+        if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + units[num % 10] : '');
+        if (num < 1000) return sotki[Math.floor(num / 100)] + (num % 100 !== 0 ? ' ' + numToWords(num % 100) : '');
+        return 'Число слишком большое для данной функции';
     };
 
     const words = numToWords(Math.abs(number));
@@ -16,131 +19,110 @@ function numberToWords(number) {
     return (number < 0) ? `минус ${words}` : words;
 }
 
-let minValue = parseInt(prompt('Минимальное значение числа для игры', '0'));
-let maxValue = parseInt(prompt('Максимальное значение числа для игры', '100'));
+document.getElementById('btnSetup').addEventListener('click', function() {
+    document.getElementById('orderNumberField').innerText = '0';
+    document.getElementById('answerField').innerText = 'Настройте параметры и я попробую угадать число, которое вы загадали';
+});
 
-// Проверка и коррекция ввода на предельные значения
-minValue = (minValue < -999 || isNaN(minValue)) ? 0 : (minValue > 999) ? 999 : minValue;
-maxValue = (maxValue < -999 || isNaN(maxValue)) ? 100 : (maxValue > 999) ? 999 : maxValue;
+document.getElementById('btnApply').addEventListener('click', function() {
 
-// Если введенные значения не корректны, предложим новый ввод
-if (minValue > maxValue) {sa
-    alert('Некорректные значения. Минимальное значение не может быть больше максимального.');
-    minValue = parseInt(prompt('Введите корректное минимальное значение', '0'));
-    maxValue = parseInt(prompt('Введите корректное максимальное значение', '100'));
+    let minValue, maxValue, orderNumber, answerNumber, gameRun;
 
-    // Проверка и коррекция ввода на предельные значения после повторного ввода
-    minValue = (minValue < -999 || isNaN(minValue)) ? 0 : (minValue > 999) ? 999 : minValue;
-    maxValue = (maxValue < -999 || isNaN(maxValue)) ? 100 : (maxValue > 999) ? 999 : maxValue;
-}
+    const orderNumberField = document.getElementById('orderNumberField');
+    const answerField = document.getElementById('answerField');
+    const toastBody = document.getElementById('toastBody');
 
-alert(`Загадайте любое целое число от ${numberToWords(minValue)} до ${numberToWords(maxValue)}, а я его угадаю`);
-let answerNumber = Math.floor((minValue + maxValue) / 2);
-let orderNumber = 1;
-let gameRun = true;
+    function setGameParameters() {
 
-const orderNumberField = document.getElementById('orderNumberField');
-const answerField = document.getElementById('answerField');
+        minValue = parseInt(document.getElementById('minValueInput').value);
+        maxValue = parseInt(document.getElementById('maxValueInput').value);
 
-orderNumberField.innerText = orderNumber;
-answerField.innerText = `Вы загадали число ${numberToWords(answerNumber)}?`;
-
-document.getElementById('btnRetry').addEventListener('click', function () {
-    minValue = parseInt(prompt('Минимальное значение числа для игры', '0'));
-    maxValue = parseInt(prompt('Максимальное значение числа для игры', '100'));
-
-    // Проверка и коррекция ввода на предельные значения
-    minValue = (minValue < -999 || isNaN(minValue)) ? 0 : (minValue > 999) ? 999 : minValue;
-    maxValue = (maxValue < -999 || isNaN(maxValue)) ? 100 : (maxValue > 999) ? 999 : maxValue;
-
-    // Если введенные значения не корректны, предложим новый ввод
-    if (minValue > maxValue) {
-        alert('Некорректные значения. Минимальное значение не может быть больше максимального.');
-        minValue = parseInt(prompt('Введите корректное минимальное значение', '0'));
-        maxValue = parseInt(prompt('Введите корректное максимальное значение', '100'));
-
-        // Проверка и коррекция ввода на предельные значения после повторного ввода
-        minValue = (minValue < -999 || isNaN(minValue)) ? 0 : (minValue > 999) ? 999 : minValue;
+        // Проверка и коррекция ввода на предельные значения
+        minValue = Math.max(-999, isNaN(minValue) ? 0 : minValue);
         maxValue = (maxValue < -999 || isNaN(maxValue)) ? 100 : (maxValue > 999) ? 999 : maxValue;
-    }
 
-    alert(`Загадайте любое целое число от ${numberToWords(minValue)} до ${numberToWords(maxValue)}, а я его угадаю`);
-    orderNumber = 1;
-    gameRun = true;
-    answerNumber = Math.floor((minValue + maxValue) / 2);
-
-    orderNumberField.innerText = orderNumber;
-    answerField.innerText = `Вы загадали число ${numberToWords(answerNumber)}?`;
-})
-
-document.getElementById('btnOver').addEventListener('click', function () {
-    if (gameRun) {
-        if (minValue === maxValue) {
-            const phraseRandom = Math.round(Math.random());
-            const answerPhrase = (phraseRandom === 1) ?
-                `Вы загадали неправильное число!\n\u{1F914}` :
-                `Я сдаюсь..\n\u{1F92F}`;
-
-            answerField.innerText = answerPhrase;
-            gameRun = false;
-        } else {
-            minValue = answerNumber + 1;
-            answerNumber = Math.floor((minValue + maxValue) / 2);
-            orderNumber++;
-            orderNumberField.innerText = orderNumber;
-
-            const phrases = [
-                `Да это просто! Ты загадал ${numberToWords(answerNumber)}!`,
-                `Это, должно быть, число ${numberToWords(answerNumber)}.`,
-                `Верно, ты думаешь о ${numberToWords(answerNumber)}?`
-            ];
-
-            const randomIndex = Math.floor(Math.random() * phrases.length);
-            answerField.innerText = phrases[randomIndex];
+        if (minValue > maxValue) {
+            showNotification('Некорректные значения. Минимальное значение не может быть больше максимального.');
+            return;
         }
+
+        orderNumber = 1;
+        gameRun = true;
+        answerNumber = Math.floor((minValue + maxValue) / 2);
+
+        orderNumberField.innerText = orderNumber;
+        answerField.innerText = `Вы загадали число ${numberToWords(answerNumber)}?`;
+        $('#gameSettingsCollapse').collapse('hide'); // Закрыть коллапс после установки параметров
     }
-})
 
-document.getElementById('btnLess').addEventListener('click', function () {
-    if (gameRun) {
-        if (minValue === maxValue) {
-            const phraseRandom = Math.round(Math.random());
-            const answerPhrase = (phraseRandom === 1) ?
-                `Вы загадали неправильное число!\n\u{1F914}` :
-                `Я сдаюсь..\n\u{1F92F}`;
+    function showNotification(message) {
+        toastBody.innerText = message;
+        $('.toast').toast('show');
+    }
 
-            answerField.innerText = answerPhrase;
-            gameRun = false;
-        } else {
-            maxValue = answerNumber - 1;
-            answerNumber = Math.floor((minValue + maxValue) / 2);
-            orderNumber++;
-            orderNumberField.innerText = orderNumber;
+    // Кнопка "Применить" для установки параметров игры
+    document.getElementById('btnApply').addEventListener('click', setGameParameters());
+    // Кнопка "Заново" для сброса игры
+    // document.getElementById('btnRetry').addEventListener('click', ()=> {
+    //     $('#gameSettingsCollapse').collapse('show'); // Показать коллапс для ввода параметров
+    // });
 
-            // Варианты разнообразных сообщений при предположении числа
-            const phrases = [
-                `Да это легко! Ты загадал ${numberToWords(answerNumber)}!`,
-                `Наверное, это число ${numberToWords(answerNumber)}.`,
-                `Может быть, ты думаешь о ${numberToWords(answerNumber)}?`
-            ];
-
-            const randomIndex = Math.floor(Math.random() * phrases.length);
-            answerField.innerText = phrases[randomIndex];
+    // Кнопка "Загадали больше" для угадывания числа
+    document.getElementById('btnOver').addEventListener('click', ()=> {
+        if (gameRun) {
+            console.log(answerNumber)
+            if (minValue === maxValue) {
+                answerField.innerText = `Вы загадали неправильное число!`;
+                gameRun = false;
+            } else {
+                minValue = answerNumber + 1;
+                answerNumber = Math.floor((minValue + maxValue) / 2);
+                orderNumber++;
+                orderNumberField.innerText = orderNumber;
+                const phrases = [
+                    `Да это просто! Ты загадал ${numberToWords(answerNumber)}!`,
+                    `Это, должно быть, число ${numberToWords(answerNumber)}.`,
+                    `Верно, ты думаешь о ${numberToWords(answerNumber)}?`
+                ];
+                const randomIndex = Math.floor(Math.random() * phrases.length);
+                answerField.innerText = phrases[randomIndex];
+            }
         }
-    }
-})
+    });
 
-document.getElementById('btnEqual').addEventListener('click', function () {
-    if (gameRun) {
-        const phrases = [
-            `Я всегда угадываю!\n\u{1F60E}`,
-            `Невероятно! Ты загадал ${numberToWords(answerNumber)}!`,
-            `Это было легко, загаданное число - ${numberToWords(answerNumber)}.`
-        ];
+    // Кнопка "Загадали меньше" для угадывания числа
+    document.getElementById('btnLess').addEventListener('click', ()=> {
+        if (gameRun) {
+            if (minValue >= answerNumber) {
+                answerField.innerText = `Вы загадали неправильное число!`;
+                gameRun = false;
+            } else {
+                maxValue = answerNumber - 1;
+                answerNumber = Math.floor((minValue + maxValue) / 2);
+                orderNumber++;
+                orderNumberField.innerText = orderNumber;
+                const phrases = [
+                    `Да это легко! Ты загадал ${numberToWords(answerNumber)}!`,
+                    `Наверное, это число ${numberToWords(answerNumber)}.`,
+                    `Может быть, ты думаешь о ${numberToWords(answerNumber)}?`
+                ];
+                const randomIndex = Math.floor(Math.random() * phrases.length);
+                answerField.innerText = phrases[randomIndex];
+            }
+        }
+    });
 
-        const randomIndex = Math.floor(Math.random() * phrases.length);
-        answerField.innerText = phrases[randomIndex];
-
-        gameRun = false;
-    }
-})
+    // Кнопка "Верно!" для завершения игры
+    document.getElementById('btnEqual').addEventListener('click', ()=> {
+        if (gameRun) {
+            const phrases = [
+                `Я всегда угадываю!`,
+                `Невероятно! Ты загадал ${numberToWords(answerNumber)}!`,
+                `Это было легко, загаданное число - ${numberToWords(answerNumber)}.`
+            ];
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+                        answerField.innerText = phrases[randomIndex];
+            gameRun = false;
+        }
+    });
+});

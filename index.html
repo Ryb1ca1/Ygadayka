@@ -9,34 +9,62 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
 </head>
 <body>
-<div class="container">
-    <div class="row game-card align-items-center">
-        <div class="col col-md-4 offset-md-4">
-            <div class="card text-center">
-                <div class="card-header">
-                    <p class="m-0">Вопрос №<span id="orderNumberField">5</span></p>
-                </div>
-                <div class="card-body">
-                    <div class="row no-gutters">
-                        <div class="col">
-                            <h3 class="card-title m-0"><span id="answerField">Вы загадали число 5?</span></h3>
-                        </div>
+    <div class="col col-md-4 offset-md-4">
+        <div class="card text-center">
+            <div class="card-header">
+                <p class="m-0">Вопрос №<span id="orderNumberField">0</span></p>
+            </div>
+            <div class="card-body">
+                <div class="row no-gutters">
+                    <div class="col">
+                        <h3 class="card-title m-0"><span id="answerField">Настройте параметры и я попробую угадать число которое вы загадалили</span></h3>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="btn-group">
-                        <button class="btn btn-info" id="btnLess">&#129047;<br>меньше</button>
-                        <button class="btn btn-success btn-lg" id="btnEqual">Верно!</button>
-                        <button class="btn btn-info" id="btnOver">больше<br>&#129045;</button>
+            </div>
+            <div class="card-body">
+                <div class="btn-group">
+                    <button class="btn btn-info" id="btnLess">&#129047;<br>меньше</button>
+                    <button class="btn btn-success btn-lg" id="btnEqual">Верно!</button>
+                    <button class="btn btn-info" id="btnOver">больше<br>&#129045;</button>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button  class="btn btn-link" type="button"  data-toggle="collapse" data-target="#gameSettingsCollapse" aria-expanded="false" aria-controls="gameSettingsCollapse">
+                    Изменить параметры
+                </button>
+                <div class="collapse" id="gameSettingsCollapse">
+                    <div class="card card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="minValueInput">Минимальное значение:</label>
+                                <input  class="form-control" id="minValueInput" placeholder="Введите минимальное значение">
+                            </div>
+                            <div class="form-group">
+                                <label for="maxValueInput">Максимальное значение:</label>
+                                <input  class="form-control" id="maxValueInput" placeholder="Введите максимальное значение" value="100">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="btnApply">Применить</button>
+                        </form>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-link" id="btnRetry">Заново</button>
+                <button class="btn btn-link" type="button" data-target="#gameSettingsCollapse" aria-expanded="false" aria-controls="gameSettingsCollapse" id="btnSetup">
+                    Начало новой игры
+                </button>
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Уведомление</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body" id="toastBody"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="script.js"></script>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
